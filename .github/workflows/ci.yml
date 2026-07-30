@@ -23,6 +23,10 @@ jobs:
       - run: python -m ruff check app tests scripts
       - run: python -m compileall -q app
       - run: python scripts/validate_templates.py
+      - name: Validate Docker Compose examples
+        run: |
+          docker compose -f compose.1.7b.yaml config --quiet
+          docker compose -f compose.0.6b.yaml config --quiet
       - run: python -m pytest
 
   image:

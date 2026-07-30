@@ -1,0 +1,36 @@
+services:
+  qwen3-tts:
+    image: ghcr.io/agrestisdavid/faster-qwen3-tts-wyoming:1.0.0
+    restart: unless-stopped
+    ports:
+      - "7860:7860"
+      - "10210:10210"
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      UMASK: "022"
+      TZ: "UTC"
+      NVIDIA_VISIBLE_DEVICES: "all"
+      NVIDIA_DRIVER_CAPABILITIES: "compute,utility"
+      QWEN3_TTS_MODEL: "Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice"
+      QWEN3_TTS_DEFAULT_VOICE: "sohee"
+      QWEN3_TTS_LANGUAGE: "english"
+      QWEN3_TTS_FORCE_LANGUAGE: "true"
+      QWEN3_TTS_STYLE_INSTRUCTION: >-
+        Speak naturally, clearly, and warmly in English. Use a calm, fluent
+        pace, lively but restrained prosody, and natural sentence pauses.
+        Articulate sibilants and numbers clearly. Avoid monotonous intonation,
+        exaggerated emotion, and dramatic pitch changes.
+    volumes:
+      - qwen3-tts-config:/config
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu
+
+volumes:
+  qwen3-tts-config:

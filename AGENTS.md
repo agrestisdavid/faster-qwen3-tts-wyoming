@@ -4,8 +4,8 @@ Canonical instructions for coding agents working in this repository.
 
 ## Project
 
-This repository publishes a native Unraid Community Applications template and
-the matching GHCR image:
+This repository publishes Docker Compose deployments, a native Unraid
+Community Applications template, and the matching GHCR image:
 
 ```text
 ghcr.io/agrestisdavid/faster-qwen3-tts-wyoming
@@ -20,11 +20,14 @@ Both processes share one loaded Qwen3-TTS model instance. The Wyoming adapter
 calls `http://127.0.0.1:7860/v1/audio/speech` internally.
 
 This repository is intentionally limited to the Qwen3-TTS worker and its
-Wyoming TTS adapter. Do not add unrelated services or Docker Compose.
+Wyoming TTS adapter. Do not add unrelated services to the image or deployment
+examples.
 
 ## Important Files
 
 - `Dockerfile`: CUDA image and Python dependencies
+- `compose.1.7b.yaml`: self-contained 1.7B Docker/Portainer deployment
+- `compose.0.6b.yaml`: self-contained 0.6B Docker/Portainer deployment
 - `docker-entrypoint.sh`: PUID/PGID, appdata permissions, and environment setup
 - `app/launcher.py`: PID 1 process supervision
 - `app/healthcheck.py`: combined Qwen and Wyoming health check
@@ -49,13 +52,15 @@ Do not change these values without an explicit migration:
 - persistent container path: `/config`
 
 Default model and quality settings are duplicated in
-`app/qwen3_tts_worker/config.py`, the Unraid template, and the README. Keep all
-three locations synchronized.
+`app/qwen3_tts_worker/config.py`, both Compose files, the Unraid template, and
+the README. Keep all locations synchronized. The Compose files must differ
+only in their Qwen model identifier.
 
 ## Development Rules
 
 - Never commit secrets, tokens, or private URLs.
-- Do not add a Compose file; the native Unraid app is the product.
+- Keep both Compose files self-contained; do not require an external `.env`.
+- Do not set `container_name`; Compose and Portainer own project naming.
 - Do not integrate unrelated voice services into this image.
 - Keep Qwen and the Wyoming adapter in the same container.
 - Document new environment variables in code, the template, and the README.
@@ -74,11 +79,13 @@ python -m pip install -r requirements-test.txt
 python -m ruff check app tests scripts
 python -m compileall -q app
 python scripts/validate_templates.py
+docker compose -f compose.1.7b.yaml config --quiet
+docker compose -f compose.0.6b.yaml config --quiet
 python -m pytest
 docker build -t faster-qwen3-tts-wyoming:dev .
 ```
 
-Before a release, also validate on Unraid:
+Before a release, also validate on an NVIDIA-enabled Docker host:
 
 1. Check `/health` and `/v1/voices`.
 2. Test WAV synthesis and PCM streaming.
@@ -86,7 +93,8 @@ Before a release, also validate on Unraid:
 4. Test Home Assistant through the Wyoming integration.
 5. Inspect `nvidia-smi` and container memory.
 6. Recreate the container and confirm cache persistence.
-7. Run Community Applications Validate and Scan.
+7. Start each Compose model variant independently.
+8. For Unraid releases, run Community Applications Validate and Scan.
 
 ## Releases
 
