@@ -76,12 +76,8 @@ docker compose -f compose.1.7b.yaml up -d
 docker compose -f compose.0.6b.yaml up -d
 ```
 
-No external `.env` file is required. Edit the selected Compose file if you want
-to change the timezone, user and group IDs, voice, language, or instruction.
-
-The examples intentionally omit `container_name`. Docker Compose and Portainer
-derive stable names from the project or stack name, which avoids global name
-collisions and allows independent deployments on the same Docker host.
+Edit the selected Compose file to customize the timezone, user and group IDs,
+voice, language, or instruction.
 
 Check the stack:
 
