@@ -1,0 +1,63 @@
+<Container version="2">
+  <Name>Faster-Qwen3-TTS-Wyoming</Name>
+  <Repository>ghcr.io/agrestisdavid/faster-qwen3-tts-wyoming:latest</Repository>
+  <Registry>https://github.com/users/agrestisdavid/packages/container/package/faster-qwen3-tts-wyoming</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <ExtraParams>--runtime=nvidia --gpus all</ExtraParams>
+
+  <Icon>https://raw.githubusercontent.com/agrestisdavid/faster-qwen3-tts-wyoming/main/icon.png</Icon>
+  <WebUI>http://[IP]:[PORT:7860]/ui/</WebUI>
+  <Overview>Local Faster Qwen3-TTS with a WebUI, an OpenAI-compatible streaming API, and an integrated Wyoming TTS adapter for Home Assistant. Both interfaces share one NVIDIA GPU model instance.</Overview>
+  <Support>https://github.com/agrestisdavid/faster-qwen3-tts-wyoming/issues</Support>
+  <Project>https://github.com/agrestisdavid/faster-qwen3-tts-wyoming</Project>
+  <TemplateURL>https://raw.githubusercontent.com/agrestisdavid/faster-qwen3-tts-wyoming/main/templates/faster-qwen3-tts-wyoming.xml</TemplateURL>
+  <ReadMe>https://raw.githubusercontent.com/agrestisdavid/faster-qwen3-tts-wyoming/main/README.md</ReadMe>
+  <Category>AI: HomeAutomation:</Category>
+  <ExtraSearchTerms>Qwen Qwen3 TTS Wyoming Home Assistant speech voice CUDA OpenAI</ExtraSearchTerms>
+  <Requires>Unraid 6.12 or newer, the NVIDIA Driver plugin, a CUDA-capable NVIDIA GPU, and internet access for the first model download. The default 1.7B model is recommended for quality; use the 0.6B CustomVoice model for lower VRAM usage.</Requires>
+  <Changes>1.0.0: Initial release.</Changes>
+  <Date>2026-07-30</Date>
+  <MinVer>6.12.0</MinVer>
+  <License>MIT</License>
+
+  <Config Name="Qwen WebUI and API Port" Target="7860" Default="7860" Mode="tcp" Description="Gradio WebUI and OpenAI-compatible TTS API." Type="Port" Display="always" Required="true" Mask="false"/>
+  <Config Name="Wyoming TTS Port" Target="10210" Default="10210" Mode="tcp" Description="Wyoming protocol endpoint for Home Assistant." Type="Port" Display="always" Required="true" Mask="false"/>
+  <Config Name="Appdata" Target="/config" Default="/mnt/user/appdata/faster-qwen3-tts-wyoming" Mode="rw" Description="Persistent Hugging Face, Gradio, and Torch caches." Type="Path" Display="always" Required="true" Mask="false"/>
+
+  <Config Name="Qwen3-TTS Model" Target="QWEN3_TTS_MODEL" Default="Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice" Description="Hugging Face model identifier. Use Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice for the default quality profile or Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice for lower VRAM usage." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="Default Voice" Target="QWEN3_TTS_DEFAULT_VOICE" Default="sohee" Description="Default CustomVoice speaker. Supported: aiden, dylan, eric, ono_anna, ryan, serena, sohee, uncle_fu, vivian." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="Language" Target="QWEN3_TTS_LANGUAGE" Default="english" Description="Qwen synthesis language." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="Instruct" Target="QWEN3_TTS_STYLE_INSTRUCTION" Default="Speak naturally, clearly, and warmly in English. Use a calm, fluent pace, lively but restrained prosody, and natural sentence pauses. Articulate sibilants and numbers clearly. Avoid monotonous intonation, exaggerated emotion, and dramatic pitch changes." Description="Default instruction applied to TTS requests without their own instruction." Type="Variable" Display="always" Required="false" Mask="false"/>
+
+  <Config Name="Temperature" Target="QWEN3_TTS_TEMPERATURE" Default="0.5" Description="Sampling temperature. Lower values are calmer and more stable." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Top P" Target="QWEN3_TTS_TOP_P" Default="0.3" Description="Nucleus sampling probability." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Top K" Target="QWEN3_TTS_TOP_K" Default="150" Description="Number of token candidates used during sampling." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Repetition Penalty" Target="QWEN3_TTS_REPETITION_PENALTY" Default="1.3" Description="Penalty used to reduce repeated speech artifacts." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Sampling Enabled" Target="QWEN3_TTS_DO_SAMPLE" Default="true" Description="Enable stochastic token sampling." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Seed" Target="QWEN3_TTS_SEED" Default="0" Description="Default random seed for reproducible requests." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Maximum New Tokens" Target="QWEN3_TTS_MAX_NEW_TOKENS" Default="4096" Description="Upper generation limit per text segment." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Non-Streaming Mode" Target="QWEN3_TTS_NON_STREAMING_MODE" Default="false" Description="Keep false for incremental PCM generation." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Streaming Chunk Size" Target="QWEN3_TTS_STREAMING_CHUNK_SIZE" Default="120" Description="Model token chunk size used for streaming output." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Token Safety Margin" Target="QWEN3_TTS_TOKEN_SAFETY_MARGIN" Default="8.0" Description="Multiplier used when estimating the segment token budget." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Maximum Segment Characters" Target="QWEN3_TTS_MAX_SEGMENT_CHARS" Default="500" Description="Long text is split into bounded segments at natural boundaries." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Segment Pause Milliseconds" Target="QWEN3_TTS_SEGMENT_PAUSE_MS" Default="120" Description="Silence inserted between long-text segments." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Pending Queue Limit" Target="QWEN3_TTS_QUEUE_MAX_PENDING" Default="8" Description="Maximum queued synthesis requests." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+
+  <Config Name="Backend" Target="QWEN3_TTS_BACKEND" Default="ggml" Description="Faster Qwen3-TTS inference backend." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Device" Target="QWEN3_TTS_DEVICE" Default="cuda" Description="Inference device. The default image is intended for CUDA." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Torch DType" Target="QWEN3_TTS_DTYPE" Default="bfloat16" Description="Torch model dtype." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Attention Implementation" Target="QWEN3_TTS_ATTN_IMPLEMENTATION" Default="sdpa" Description="Torch attention implementation." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="GGML Quantization" Target="QWEN3_TTS_QUANT" Default="BF16" Description="Quantization passed to the GGML backend." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Force Language" Target="QWEN3_TTS_FORCE_LANGUAGE" Default="true" Description="Always synthesize using the configured language." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Startup Timeout Seconds" Target="QWEN3_TTS_STARTUP_TIMEOUT_SECONDS" Default="1800" Description="Maximum first-start model download and initialization time." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+
+  <Config Name="PUID" Target="PUID" Default="99" Description="Host user ID used for appdata files." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="PGID" Target="PGID" Default="100" Description="Host group ID used for appdata files." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="UMASK" Target="UMASK" Default="022" Description="File creation mask." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Timezone" Target="TZ" Default="UTC" Description="Container timezone." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="NVIDIA Visible Devices" Target="NVIDIA_VISIBLE_DEVICES" Default="all" Description="NVIDIA GPU selection." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="NVIDIA Driver Capabilities" Target="NVIDIA_DRIVER_CAPABILITIES" Default="compute,utility" Description="Required NVIDIA driver capabilities." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+</Container>

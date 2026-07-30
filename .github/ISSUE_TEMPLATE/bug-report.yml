@@ -1,0 +1,47 @@
+name: Bug report
+description: Report a reproducible container, API, WebUI, or Wyoming issue.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include passwords, API keys, or private URLs.
+  - type: input
+    id: unraid
+    attributes:
+      label: Unraid version
+      placeholder: "7.2.4"
+    validations:
+      required: true
+  - type: input
+    id: image
+    attributes:
+      label: Container image tag or digest
+      placeholder: "1.0.1 or sha256:..."
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and NVIDIA driver
+      placeholder: "RTX 3060 Ti, driver 590.48.01"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe what happened and what you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      render: shell
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true

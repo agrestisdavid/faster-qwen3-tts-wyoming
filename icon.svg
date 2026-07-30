@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title description">
+  <title id="title">Faster Qwen3-TTS Wyoming</title>
+  <desc id="description">A Q-shaped speech bubble containing an audio waveform.</desc>
+  <defs>
+    <linearGradient id="background" x1="74" y1="48" x2="438" y2="468" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#17213f"/>
+      <stop offset="0.56" stop-color="#10172d"/>
+      <stop offset="1" stop-color="#090d1b"/>
+    </linearGradient>
+    <linearGradient id="qwen" x1="119" y1="126" x2="411" y2="402" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#37e6d4"/>
+      <stop offset="0.46" stop-color="#5b8cff"/>
+      <stop offset="0.76" stop-color="#a76cff"/>
+      <stop offset="1" stop-color="#f06ed0"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="158" y1="180" x2="354" y2="318" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#dfe7ff"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="92" fill="#080c18"/>
+  <rect x="20" y="20" width="472" height="472" rx="76" fill="url(#background)" stroke="#29375e" stroke-width="4"/>
+
+  <path
+    d="M256 95c-91 0-165 65-165 148s74 148 165 148c25 0 49-5 71-14l76 42-21-79c25-26 39-60 39-97 0-83-74-148-165-148Z"
+    fill="#111a32"
+    stroke="url(#qwen)"
+    stroke-width="30"
+    stroke-linejoin="round"
+    filter="url(#glow)"
+  />
+
+  <path
+    d="M157 250h35l20-58 35 119 31-143 29 112 19-58 29 28"
+    fill="none"
+    stroke="url(#wave)"
+    stroke-width="20"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <circle cx="154" cy="143" r="7" fill="#37e6d4"/>
+  <circle cx="376" cy="136" r="6" fill="#a76cff"/>
+  <circle cx="402" cy="286" r="5" fill="#f06ed0"/>
+</svg>

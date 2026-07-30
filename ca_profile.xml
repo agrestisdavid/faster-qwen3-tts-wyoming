@@ -1,0 +1,12 @@
+<CommunityApplications>
+  <Profile>
+    Native Unraid application for a local Faster Qwen3-TTS worker with an
+    integrated Wyoming TTS adapter. The app provides an English WebUI with
+    an OpenAI-compatible speech endpoint and Home Assistant integration from
+    one NVIDIA-enabled container. Support and issue tracking are available on
+    GitHub.
+  </Profile>
+  <Icon>https://raw.githubusercontent.com/agrestisdavid/faster-qwen3-tts-wyoming/main/icon.png</Icon>
+  <WebPage>https://github.com/agrestisdavid/faster-qwen3-tts-wyoming</WebPage>
+  <Forum>https://github.com/agrestisdavid/faster-qwen3-tts-wyoming/issues</Forum>
+</CommunityApplications>
